@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# CAS Systems Limited Website 🌐
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📖 Project Overview
 
-## Available Scripts
+This is a **single-page company website** for **CAS Systems Limited**, built using **React and Tailwind CSS**.  
+The website provides:
 
-In the project directory, you can run:
+- Company information
+- Product details with tabbed navigation
+- Contact details with direct links (Email, WhatsApp, and Google Maps)
+- A fully responsive and smooth user experience
 
-### `npm start`
+This project follows **modern web development best practices**, making it **efficient, scalable, and easy to maintain**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🎯 Features
 
-### `npm test`
+✅ **Sticky Header** → Fixed navigation with a logo & menu  
+✅ **Smooth Scrolling Navigation** → `scrollIntoView()` for seamless section transitions  
+✅ **"About Us" Section** → Company details with a large image  
+✅ **"Products" Section** → Switchable product tabs, with left-side image & right-side description  
+✅ **Product Images with `Aspect Fit`** → Ensures proper scaling using `object-contain`  
+✅ **Fixed Product Display Area (`h-[450px]`)** → Keeps layout stable when switching products  
+✅ **Contact Information as Hyperlinks** → Clickable Email, WhatsApp, and Address  
+✅ **Mobile-Friendly & Fully Responsive** → Tailwind CSS ensures proper display across devices
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🛠 Tech Stack
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+This project is developed with the following technologies:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend Framework**: [React 18](https://reactjs.org/)
+- **CSS Framework**: [Tailwind CSS](https://tailwindcss.com/)
+- **JavaScript (ES6+)**
+- **HTML5 & CSS3**
+- **Deployment**: GitHub Pages / Netlify / Vercel (Optional)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🚀 Installation & Setup
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### **1️⃣ Install Node.js (if not installed)**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [🔗 Download Node.js](https://nodejs.org/) (Recommended: **LTS Version**)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### **2️⃣ Clone the Repository**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```sh
+git clone https://github.com/JacobHung111/cas-system-website-sample.git
+cd cas-system-website-sample
 
-## Learn More
+### **3️⃣ Install Dependencies**
+npm install
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### **4️⃣ Start the Development Server
+npm start
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📚 Usage Guide
 
-### Code Splitting
+### Navigation
+	•	Click on navigation buttons in the header to smooth scroll to the respective section.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Products Section
+	•	Click on Product Tabs to switch between different products.
+	•	The layout remains stable when switching between products.
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Contact Section
+	•	Email → Click to open your default email client.
+	•	Phone → Click to start a WhatsApp conversation.
+	•	Address → Click to open Google Maps.
+```
