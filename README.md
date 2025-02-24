@@ -50,12 +50,18 @@ This project is developed with the following technologies:
 ```sh
 git clone https://github.com/JacobHung111/cas-system-website-sample.git
 cd cas-system-website-sample
+```
 
 ### **3️⃣ Install Dependencies**
+```sh
 npm install
+```
 
 ### **4️⃣ Start the Development Server
+```sh
 npm start
+```
+
 ---
 
 ## 📚 Usage Guide
