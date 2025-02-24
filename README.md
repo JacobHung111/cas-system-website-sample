@@ -77,4 +77,3 @@ npm start
 	•	Email → Click to open your default email client.
 	•	Phone → Click to start a WhatsApp conversation.
 	•	Address → Click to open Google Maps.
-```
