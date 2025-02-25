@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { FiMenu, FiX } from "react-icons/fi";
 import "./index.css";
 
 const App = () => {
   const [activeTab, setActiveTab] = useState("product1");
   const [headerHeight, setHeaderHeight] = useState(0);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
@@ -19,6 +21,7 @@ const App = () => {
 
   const scrollToSection = (id) => {
     document.querySelector(id).scrollIntoView({ behavior: "smooth" });
+    setIsMobileMenuOpen(false); // Close mobile menu when navigating
   };
 
   return (
@@ -27,13 +30,15 @@ const App = () => {
       <header className="fixed top-0 left-0 w-full bg-green-600 shadow-md p-4 flex justify-between items-center z-50">
         <div className="flex items-center space-x-2">
           <img
-            src="/images/cas.jpg"
+            src="/images/cas_icon.jpeg"
             alt="Company Logo"
             className="h-10 w-auto"
           />
           <h2 className="text-2xl font-bold text-white">CAS Systems Limited</h2>
         </div>
-        <nav className="absolute right-7 flex space-x-8">
+
+        {/* Desktop Navigation */}
+        <nav className="hidden md:flex space-x-8">
           <button
             onClick={() => scrollToSection("#about")}
             className="text-white font-semibold hover:text-gray-200"
@@ -53,12 +58,44 @@ const App = () => {
             Contact Us
           </button>
         </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          className="md:hidden text-white text-3xl"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <FiX /> : <FiMenu />}
+        </button>
       </header>
+
+      {/* Mobile Navigation Menu */}
+      {isMobileMenuOpen && (
+        <div className="fixed top-16 left-0 w-full bg-green-600 text-white flex flex-col items-center py-4 space-y-4 z-50 md:hidden">
+          <button
+            onClick={() => scrollToSection("#about")}
+            className="text-lg hover:text-gray-200"
+          >
+            About Us
+          </button>
+          <button
+            onClick={() => scrollToSection("#products")}
+            className="text-lg hover:text-gray-200"
+          >
+            Products
+          </button>
+          <button
+            onClick={() => scrollToSection("#contact")}
+            className="text-lg hover:text-gray-200"
+          >
+            Contact Us
+          </button>
+        </div>
+      )}
 
       {/* ========== About Us ========== */}
       <section
         id="about"
-        className="w-full flex flex-col items-center text-center py-24 bg-white shadow-md"
+        className="w-full flex flex-col items-center text-center py-24 bg-white shadow-md px-4"
         style={{ paddingTop: headerHeight + 20 }}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
@@ -69,93 +106,63 @@ const App = () => {
         <img
           src="http://www.cassystems.com/images/banner7.jpg"
           alt="About us"
-          className="w-9/12 max-w-4xl rounded-lg shadow-lg mt-6"
+          className="w-full max-w-4xl rounded-lg shadow-lg mt-6 object-contain"
         />
       </section>
 
       {/* ========== Products ========== */}
       <section
         id="products"
-        className="w-full py-24 flex flex-col items-center bg-gray-50"
+        className="w-full py-24 flex flex-col items-center bg-gray-50 px-4"
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Our Products</h2>
 
-        {/* Tabs */}
-        <div className="flex space-x-6 mb-8">
-          <button
-            className={`px-6 py-3 rounded-lg text-white font-bold ${
-              activeTab === "product1" ? "bg-green-600" : "bg-gray-300"
-            }`}
-            onClick={() => setActiveTab("product1")}
-          >
-            Product 1
-          </button>
-          <button
-            className={`px-6 py-3 rounded-lg text-white font-bold ${
-              activeTab === "product2" ? "bg-green-600" : "bg-gray-300"
-            }`}
-            onClick={() => setActiveTab("product2")}
-          >
-            Product 2
-          </button>
-          <button
-            className={`px-6 py-3 rounded-lg text-white font-bold ${
-              activeTab === "product3" ? "bg-green-600" : "bg-gray-300"
-            }`}
-            onClick={() => setActiveTab("product3")}
-          >
-            Product 3
-          </button>
+        {/* Scrollable Product Tabs */}
+        <div className="w-full max-w-5xl overflow-x-auto flex justify-start md:justify-center space-x-4 pb-2 scrollbar-hide mx-auto">
+          {["product1", "product2", "product3"].map((product) => (
+            <button
+              key={product}
+              className={`h-12 w-32 min-w-[128px] px-6 py-3 rounded-lg text-white font-bold ${
+                activeTab === product ? "bg-green-600" : "bg-gray-300"
+              }`}
+              onClick={() => setActiveTab(product)}
+            >
+              {product.replace("product", "Product ")}
+            </button>
+          ))}
         </div>
 
-        <div className="w-full max-w-5xl h-[450px] flex items-center justify-between bg-white shadow-lg p-6 rounded-lg">
-          <div className="w-1/2 flex justify-center">
-            {activeTab === "product1" && (
-              <img
-                src="http://sensaphone.asia/products/sentinel.jpg"
-                alt="Product 1"
-                className="w-96 h-64 object-contain rounded-lg shadow-md"
-              />
-            )}
-            {activeTab === "product2" && (
-              <img
-                src="http://www.cassystems.com/pro/TTC-1.jpg"
-                alt="Product 2"
-                className="w-96 h-64 object-contain rounded-lg shadow-md"
-              />
-            )}
-            {activeTab === "product3" && (
-              <img
-                src="http://www.cassystems.com/pro/indust1.jpg"
-                alt="Product 3"
-                className="w-96 h-64 object-contain rounded-lg shadow-md"
-              />
-            )}
+        {/* Product Details */}
+        <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center bg-white shadow-lg p-6 rounded-lg mt-6">
+          <div className="w-full md:w-1/2 flex justify-center">
+            <img
+              src={
+                activeTab === "product1"
+                  ? "http://sensaphone.asia/products/sentinel.jpg"
+                  : activeTab === "product2"
+                  ? "http://www.cassystems.com/pro/TTC-1.jpg"
+                  : "http://www.cassystems.com/pro/indust1.jpg"
+              }
+              alt={activeTab}
+              className="w-60 h-40 md:w-96 md:h-64 object-contain rounded-lg shadow-md"
+            />
           </div>
 
-          <div className="w-1/2 text-left">
-            {activeTab === "product1" && (
-              <p className="text-lg text-gray-700">
-                Product 1 provides advanced remote monitoring solutions.
-              </p>
-            )}
-            {activeTab === "product2" && (
-              <p className="text-lg text-gray-700">
-                Product 2 is an innovative temperature control system for
-                industrial use.
-              </p>
-            )}
-            {activeTab === "product3" && (
-              <p className="text-lg text-gray-700">
-                Product 3 features an industrial-grade heating solution.
-              </p>
-            )}
+          <div className="w-full md:w-1/2 text-center md:text-left mt-4 md:mt-0">
+            <p className="text-lg text-gray-700">
+              {activeTab === "product1" &&
+                "Product 1 provides advanced remote monitoring solutions."}
+              {activeTab === "product2" &&
+                "Product 2 is an innovative temperature control system for industrial use."}
+              {activeTab === "product3" &&
+                "Product 3 features an industrial-grade heating solution."}
+            </p>
           </div>
         </div>
       </section>
 
       {/* ========== Contact Us ========== */}
-      <section id="contact" className="w-full py-24 bg-white text-center">
+      <section id="contact" className="w-full py-24 bg-white text-center px-4">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
         <p className="text-lg text-gray-600">
           <a
