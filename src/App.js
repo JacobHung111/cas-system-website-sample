@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
+import { FaEnvelope, FaPhone, FaFax, FaMapMarkerAlt } from "react-icons/fa";
 import "./index.css";
 
 const App = () => {
-  const [activeTab, setActiveTab] = useState("product1");
+  const [activeTab, setActiveTab] = useState("sensaphone");
   const [headerHeight, setHeaderHeight] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -27,10 +28,10 @@ const App = () => {
   return (
     <div className="font-sans">
       {/* ========== Sticky Header ========== */}
-      <header className="fixed top-0 left-0 w-full bg-green-600 shadow-md p-4 flex justify-between items-center z-50">
+      <header className="fixed top-0 left-0 w-full bg-[#133984] shadow-md p-4 flex justify-between items-center z-50">
         <div className="flex items-center space-x-2">
           <img
-            src="/images/cas_icon.jpeg"
+            src="/images/CAS_White.png"
             alt="Company Logo"
             className="h-10 w-auto"
           />
@@ -67,10 +68,9 @@ const App = () => {
           {isMobileMenuOpen ? <FiX /> : <FiMenu />}
         </button>
       </header>
-
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed top-16 left-0 w-full bg-green-600 text-white flex flex-col items-center py-4 space-y-4 z-50 md:hidden">
+        <div className="fixed top-16 left-0 w-full bg-[#133984] text-white flex flex-col items-center py-4 space-y-4 z-50 md:hidden">
           <button
             onClick={() => scrollToSection("#about")}
             className="text-lg hover:text-gray-200"
@@ -91,7 +91,6 @@ const App = () => {
           </button>
         </div>
       )}
-
       {/* ========== About Us ========== */}
       <section
         id="about"
@@ -100,16 +99,30 @@ const App = () => {
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
         <p className="text-lg text-gray-600 max-w-2xl leading-relaxed">
-          Founded in 1997, CAS is a professional company with core competence in
-          engineering, brand management, product distributing, and installation.
+          Founded in 1997, <strong>CAS</strong> is a professional company with
+          core competence in engineering, brand management, product distributing
+          and installation. Our products include remote monitoring systems,
+          liquid leakage detection systems, industrial heat tracing systems,
+          commercial underfloor heating systems and hot water temperature
+          maintenance systems, etc.
+        </p>
+        <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mt-3">
+          As a pioneering organization in promoting the concept of remote
+          environmental monitoring in Asia, <strong>CAS</strong> is strongly
+          entrenched in these sectors with thousands of clients in more than 20
+          countries.
+        </p>
+        <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mt-3">
+          <strong>CAS</strong> has highest quality product. <strong>CAS</strong>{" "}
+          provides professional installation and maintenance service, which
+          safeguard your projects all the way.
         </p>
         <img
-          src="http://www.cassystems.com/images/banner7.jpg"
+          src="/images/CAS_Coverage.jpg"
           alt="About us"
-          className="w-full max-w-4xl rounded-lg shadow-lg mt-6 object-contain"
+          className="w-full max-w-3xl rounded-lg shadow-lg mt-6 object-contain"
         />
       </section>
-
       {/* ========== Products ========== */}
       <section
         id="products"
@@ -117,84 +130,273 @@ const App = () => {
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Our Products</h2>
 
-        {/* Scrollable Product Tabs */}
-        <div className="w-full max-w-5xl overflow-x-auto flex justify-start md:justify-center space-x-4 pb-2 scrollbar-hide mx-auto">
-          {["product1", "product2", "product3"].map((product) => (
+        {/* Scrollable Product Tabs (Now Using Logos) */}
+        <div className="w-full max-w-5xl overflow-x-auto flex flex-nowrap justify-start md:justify-center space-x-6 pb-2 scrollbar-hide mx-auto">
+          {[
+            {
+              id: "sensaphone",
+              img: "/images/Sensaphone (Original).png",
+              alt: "Sensaphone Logo",
+            },
+            {
+              id: "floor_heating",
+              img: "/images/Raychem Logo.png",
+              alt: "Raychem Logo",
+            },
+            {
+              id: "water_leak",
+              img: "/images/TraceTek_Logo.png",
+              alt: "TraceTek Logo",
+            },
+            {
+              id: "picobox",
+              img: "/images/PB logo - Linkwise blue.jpg",
+              alt: "Picobox Logo",
+            },
+          ].map((product) => (
             <button
-              key={product}
-              className={`h-12 w-32 min-w-[128px] px-6 py-3 rounded-lg text-white font-bold ${
-                activeTab === product ? "bg-green-600" : "bg-gray-300"
-              }`}
-              onClick={() => setActiveTab(product)}
+              key={product.id}
+              className="h-20 w-32 min-w-[128px] flex justify-center items-center"
+              onClick={() => setActiveTab(product.id)}
             >
-              {product.replace("product", "Product ")}
+              <img
+                src={product.img}
+                alt={product.alt}
+                className={`h-16 object-contain ${
+                  activeTab === product.id
+                    ? "border-2 border-[#133984] rounded-md"
+                    : ""
+                }`}
+              />
             </button>
           ))}
         </div>
 
         {/* Product Details */}
-        <div className="w-full max-w-5xl flex flex-col md:flex-row items-center justify-center bg-white shadow-lg p-6 rounded-lg mt-6">
-          <div className="w-full md:w-1/2 flex justify-center">
-            <img
-              src={
-                activeTab === "product1"
-                  ? "http://sensaphone.asia/products/sentinel.jpg"
-                  : activeTab === "product2"
-                  ? "http://www.cassystems.com/pro/TTC-1.jpg"
-                  : "http://www.cassystems.com/pro/indust1.jpg"
-              }
-              alt={activeTab}
-              className="w-60 h-40 md:w-96 md:h-64 object-contain rounded-lg shadow-md"
-            />
-          </div>
+        <div className="w-full max-w-5xl flex flex-col items-center bg-white shadow-lg p-8 rounded-xl mt-8 space-y-6">
+          {activeTab === "sensaphone" && (
+            <div className="text-center space-y-4">
+              <p className="text-lg text-gray-700">
+                Sensaphone systems provide an extra layer of protection 24/7,
+                instantly notifying you of changes in temperature, equipment
+                status and other critical conditions. Alerts can be sent
+                straight to your mobile device – keeping you updated and giving
+                you peace of mind.
+              </p>
+              <img
+                src="/images/Page 2_Sensaphone/Sensaphone.png"
+                alt="Sensaphone"
+                className="w-full max-w-md mx-auto rounded-lg shadow-md object-contain"
+              />
+            </div>
+          )}
+          {activeTab === "floor_heating" && (
+            <div className="text-center space-y-4">
+              <p className="text-lg text-gray-700">
+                From bathrooms to living rooms, from homes to warehouses, enjoy
+                the comfort of a warm floor. RAYCHEM electric floor heating
+                systems keep you warm and provide energy-efficient comfort.
+              </p>
+              <div className="flex flex-col items-center space-y-3">
+                <img
+                  src="/images/Page 3_Raychem/1.jpg"
+                  alt="Raychem1"
+                  className="w-full max-w-md mx-auto shadow-md object-contain"
+                />
+                <img
+                  src="/images/Page 3_Raychem/2.jpg"
+                  alt="Raychem2"
+                  className="w-full max-w-md mx-auto shadow-md object-contain"
+                />
+                <iframe
+                  className="w-full max-w-lg h-64 mt-4 rounded-lg shadow-md"
+                  src="https://www.youtube.com/embed/zVXXmzhPMwc"
+                  title="Floor Heating Video"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          )}
+          {activeTab === "water_leak" && (
+            <div className="text-center space-y-6">
+              <p className="text-lg text-gray-700">
+                Leak detection systems enhance environmental health and safety
+                by ensuring that leaks are discovered before any significant
+                damage can occur. RAYCHEM TraceTek solutions detect liquid
+                leaks, whether they’re water, fuel, or aqueous chemicals.
+              </p>
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Water Leak Detection
+                </h2>
+                <p className="text-lg text-gray-700">
+                  RAYCHEM TraceTek water leak detection system with sensor
+                  cables, probes, and monitoring systems lets you detect and
+                  pinpoint the source of a leak, allowing you to take corrective
+                  action before damage occurs.
+                </p>
+                <div className="flex justify-center">
+                  <iframe
+                    className="w-full max-w-lg h-64 rounded-lg shadow-md"
+                    src="https://www.youtube.com/embed/lMftJ4BiCjo"
+                    title="Water Leak Detection Video"
+                    allowFullScreen
+                  ></iframe>
+                </div>
 
-          <div className="w-full md:w-1/2 text-center md:text-left mt-4 md:mt-0">
-            <p className="text-lg text-gray-700">
-              {activeTab === "product1" &&
-                "Product 1 provides advanced remote monitoring solutions."}
-              {activeTab === "product2" &&
-                "Product 2 is an innovative temperature control system for industrial use."}
-              {activeTab === "product3" &&
-                "Product 3 features an industrial-grade heating solution."}
-            </p>
-          </div>
+                <h2 className="text-2xl font-bold text-gray-800">
+                  Fuel Leak Detection
+                </h2>
+                <p className="text-lg text-gray-700">
+                  Leaking hydrocarbon fuels are extremely dangerous in an
+                  industrial environment. Undetected fuel leaks pose high fire
+                  and explosion risks. The RAYCHEM TraceTek Leak Detection
+                  system offers:
+                </p>
+                <div className="text-left mx-auto w-full max-w-md">
+                  <ul className="list-disc list-inside text-lg text-gray-700">
+                    <li>Early detection of fuel leaks and spills</li>
+                    <li>Quick response warnings in dangerous environments</li>
+                    <li>Leak detection before environmental damage occurs</li>
+                    <li>Cost-effective safety and environmental protection</li>
+                  </ul>
+                </div>
+
+                <div className="flex justify-center">
+                  <iframe
+                    className="w-full max-w-lg h-64 rounded-lg shadow-md"
+                    src="https://www.youtube.com/embed/EFc54VUM8Gs"
+                    title="Fuel Leak Detection Video"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+
+                <div className="flex justify-center">
+                  <a
+                    href="/images/Page 4_Tracetek/TraceTek Water Leak Detection Schematic Diagram.jpg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img
+                      src="/images/Page 4_Tracetek/TraceTek Water Leak Detection Schematic Diagram.jpg"
+                      alt="TraceTek"
+                      className="w-full max-w-2xl mx-auto rounded-lg shadow-md object-contain cursor-pointer"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
+          {activeTab === "picobox" && (
+            <div className="text-center space-y-6">
+              <p className="text-lg text-gray-700">
+                Picobox is a versatile range of devices designed for remote
+                monitoring and control of equipment and facilities. These
+                modules and sensors offer alarm monitoring, on/off control, and
+                event logging functions, enabling efficient supervision of
+                critical operations and processes. Utilizing Short Messaging
+                Service (SMS), Picobox systems provide instant alerts and
+                management capabilities via mobile phones, ensuring prompt
+                responses to any issues.
+              </p>
+              <div className="space-y-4">
+                <h2 className="text-xl font-semibold text-gray-800">
+                  Key Products
+                </h2>
+                <p className="text-lg text-gray-700">
+                  One notable product in the Picobox lineup is the Picobox REX,
+                  a cost-effective monitoring system that delivers real-time
+                  status updates of your equipment through SMS and email
+                  notifications. This system ensures continuous monitoring,
+                  allowing for immediate action in case of equipment anomalies.
+                </p>
+                <p className="text-lg text-gray-700">
+                  Another key offering is the Picobox FMGuard, an advanced
+                  monitoring controller that consolidates multiple models into a
+                  single device. It provides comprehensive monitoring
+                  capabilities, including SMS and email alerts, a user-friendly
+                  web interface, and the ability to monitor up to 84 points
+                  simultaneously with expansion modules.
+                </p>
+                <p className="text-lg text-gray-700">
+                  Additionally, Picobox offers Modbus RTU Data Acquisition (DAQ)
+                  modules, which provide a simple, low-cost solution for
+                  distributed I/O requirements. These modules are designed for
+                  easy integration into existing systems, offering flexibility
+                  and scalability for various applications.
+                </p>
+                <div className="flex justify-center">
+                  <iframe
+                    className="w-full max-w-lg h-64 rounded-lg shadow-md"
+                    src="https://www.youtube.com/embed/PcvO7wqA4U8"
+                    title="Picobox Video"
+                    allowFullScreen
+                  ></iframe>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
-
       {/* ========== Contact Us ========== */}
-      <section id="contact" className="w-full py-24 bg-white text-center px-4">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
-        <p className="text-lg text-gray-600">
-          <a
-            href="mailto:contact@company.com"
-            className="text-blue-500 hover:underline"
-          >
-            Email: contact@company.com
-          </a>
-        </p>
-        <p className="text-lg text-gray-600">
-          <a
-            href="https://wa.me/1234567890"
-            className="text-blue-500 hover:underline"
-          >
-            Phone: +1234567890 (WhatsApp)
-          </a>
-        </p>
-        <p className="text-lg text-gray-600">
-          <a
-            href="https://goo.gl/maps/example"
-            className="text-blue-500 hover:underline"
-          >
-            Address: 123 Main St, City
-          </a>
-        </p>
-        <div className="mt-6">
-          <iframe
-            title="Google Map"
-            className="w-full max-w-lg h-64 rounded-lg shadow-lg mx-auto"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.835434509368!2d144.9559283153167!3d-37.81720997975195!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d5dfb1d8a3f%3A0xe3b1b3b9b9f5a32d!2sFederation+Square!5e0!3m2!1sen!2sau!4v1510913828986"
-            allowFullScreen
-          ></iframe>
+      <section id="contact" className="w-full py-24 bg-white px-4">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+          Contact Us
+        </h2>
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-6 md:space-y-0">
+          {/* Contact Information*/}
+          <div className="md:w-1/2 space-y-4 pl-6 md:pl-12  self-center">
+            <p className="text-lg text-gray-600 flex items-center space-x-3">
+              <FaEnvelope className="text-[#133984]" />
+              <a
+                href="mailto:info@CASsystems.com"
+                className="text-[#133984] hover:underline"
+              >
+                info@CASsystems.com
+              </a>
+            </p>
+
+            <p className="text-lg text-gray-600 flex items-center space-x-3">
+              <FaPhone className="text-[#133984]" />
+              <a
+                href="tel:+85227805123"
+                className="text-[#133984] hover:underline"
+              >
+                +852 2780 5123
+              </a>
+            </p>
+
+            <p className="text-lg text-gray-600 flex items-center space-x-3">
+              <FaFax className="text-[#133984]" />
+              <a
+                href="fax:+85230115123"
+                className="text-[#133984] hover:underline"
+              >
+                +852 3011 5123
+              </a>
+            </p>
+
+            <p className="text-lg text-gray-600 flex items-center space-x-3">
+              <FaMapMarkerAlt className="text-[#133984]" />
+              <a
+                href="https://maps.app.goo.gl/5zJkmU5jZ1z6LqRn9"
+                className="text-[#133984] hover:underline"
+              >
+                Unit 1213, 12/F, Chevalier Commercial Centre, No. 8 Wang Hoi
+                Road, Kowloon Bay, Hong Kong
+              </a>
+            </p>
+          </div>
+
+          {/* Google Map (Right) */}
+          <div className="md:w-1/2 flex justify-center">
+            <iframe
+              title="Google Map"
+              className="w-full max-w-lg h-64 rounded-lg shadow-lg"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1366.4052390190125!2d114.21133476594478!3d22.321303633187814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8eb74b90be1%3A0xd40475ed0cd71f0b!2sCAS%20Systems%20Limited!5e0!3m2!1szh-TW!2sca!4v1740758742850!5m2!1szh-TW!2sca"
+              allowFullScreen
+            ></iframe>
+          </div>
         </div>
       </section>
     </div>
