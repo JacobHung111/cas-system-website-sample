@@ -1,10 +1,21 @@
 {
   "short_name": "CAS",
   "name": "CAS Systems Limited",
+  "description": "CAS Systems Limited specializes in remote monitoring, leakage detection, and industrial heating solutions.",
   "icons": [
+    {
+      "src": "Images/CAS_Transparent.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "Images/CAS_Transparent.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#133984",
   "background_color": "#ffffff"
 }
