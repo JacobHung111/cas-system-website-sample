@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaEnvelope, FaPhone, FaFax, FaMapMarkerAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
+import { Link } from "react-scroll";
 import "./index.css";
 
 const App = () => {
@@ -20,15 +22,16 @@ const App = () => {
     return () => window.removeEventListener("resize", updateHeaderHeight);
   }, []);
 
-  const scrollToSection = (id) => {
-    document.querySelector(id).scrollIntoView({ behavior: "smooth" });
-    setIsMobileMenuOpen(false); // Close mobile menu when navigating
-  };
-
   return (
     <div className="font-sans">
       {/* ========== Sticky Header ========== */}
-      <header className="fixed top-0 left-0 w-full bg-[#133984] shadow-md p-4 flex justify-between items-center z-50">
+      <motion.header
+        className="fixed top-0 left-0 w-full bg-[#133984] shadow-md p-4 flex justify-between items-center z-50"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        {" "}
         <div className="flex items-center space-x-2">
           <img
             src="/images/CAS_White.png"
@@ -37,29 +40,20 @@ const App = () => {
           />
           <h2 className="text-2xl font-bold text-white">CAS Systems Limited</h2>
         </div>
-
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-8">
-          <button
-            onClick={() => scrollToSection("#about")}
-            className="text-white font-semibold hover:text-gray-200"
-          >
-            About Us
-          </button>
-          <button
-            onClick={() => scrollToSection("#products")}
-            className="text-white font-semibold hover:text-gray-200"
-          >
-            Products
-          </button>
-          <button
-            onClick={() => scrollToSection("#contact")}
-            className="text-white font-semibold hover:text-gray-200"
-          >
-            Contact Us
-          </button>
+          {["About Us", "Products", "Contact Us"].map((item, index) => (
+            <Link
+              key={index}
+              to={item.toLowerCase().replace(/\s/g, "")}
+              smooth={true}
+              duration={800}
+              className="text-white font-semibold cursor-pointer hover:text-gray-200 transition-all duration-300"
+            >
+              {item}
+            </Link>
+          ))}
         </nav>
-
         {/* Mobile Menu Button */}
         <button
           className="md:hidden text-white text-3xl"
@@ -67,35 +61,41 @@ const App = () => {
         >
           {isMobileMenuOpen ? <FiX /> : <FiMenu />}
         </button>
-      </header>
+      </motion.header>
       {/* Mobile Navigation Menu */}
       {isMobileMenuOpen && (
-        <div className="fixed top-16 left-0 w-full bg-[#133984] text-white flex flex-col items-center py-4 space-y-4 z-50 md:hidden">
-          <button
-            onClick={() => scrollToSection("#about")}
-            className="text-lg hover:text-gray-200"
-          >
-            About Us
-          </button>
-          <button
-            onClick={() => scrollToSection("#products")}
-            className="text-lg hover:text-gray-200"
-          >
-            Products
-          </button>
-          <button
-            onClick={() => scrollToSection("#contact")}
-            className="text-lg hover:text-gray-200"
-          >
-            Contact Us
-          </button>
-        </div>
+        <motion.div
+          initial={{ y: -100, opacity: 0 }}
+          animate={
+            isMobileMenuOpen ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }
+          }
+          transition={{ duration: 0.4 }}
+          className={`fixed top-16 left-0 w-full bg-[#133984] text-white flex flex-col items-center py-4 space-y-4 z-50 md:hidden ${
+            isMobileMenuOpen ? "block" : "hidden"
+          }`}
+        >
+          {["About Us", "Products", "Contact Us"].map((item, index) => (
+            <Link
+              key={index}
+              to={item.toLowerCase().replace(/\s/g, "")}
+              smooth={true}
+              duration={800}
+              className="text-lg hover:text-gray-200 transition-all duration-300 cursor-pointer"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item}
+            </Link>
+          ))}
+        </motion.div>
       )}
       {/* ========== About Us ========== */}
-      <section
-        id="about"
+      <motion.section
+        id="aboutus"
         className="w-full flex flex-col items-center text-center py-24 bg-white shadow-md px-4"
-        style={{ paddingTop: headerHeight + 20 }}
+        style={{ paddingTop: headerHeight + 40 }}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-4">About Us</h2>
         <p className="text-lg text-gray-600 max-w-2xl leading-relaxed">
@@ -117,12 +117,14 @@ const App = () => {
           provides professional installation and maintenance service, which
           safeguard your projects all the way.
         </p>
-        <img
+        <motion.img
           src="/images/CAS_Coverage.jpg"
           alt="About us"
           className="w-full max-w-3xl rounded-lg shadow-lg mt-6 object-contain"
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.3 }}
         />
-      </section>
+      </motion.section>
       {/* ========== Products ========== */}
       <section
         id="products"
@@ -131,7 +133,13 @@ const App = () => {
         <h2 className="text-3xl font-bold text-gray-800 mb-8">Our Products</h2>
 
         {/* Scrollable Product Tabs (Now Using Logos) */}
-        <div className="w-full max-w-5xl overflow-x-auto flex flex-nowrap justify-start md:justify-center space-x-6 pb-2 scrollbar-hide mx-auto">
+        <motion.div
+          className="w-full max-w-5xl overflow-x-auto flex flex-nowrap justify-start md:justify-center space-x-6 pb-2 scrollbar-hide mx-auto"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
           {[
             {
               id: "sensaphone",
@@ -154,10 +162,11 @@ const App = () => {
               alt: "Picobox Logo",
             },
           ].map((product) => (
-            <button
+            <motion.button
               key={product.id}
               className="h-20 w-32 min-w-[128px] flex justify-center items-center"
               onClick={() => setActiveTab(product.id)}
+              whileHover={{ scale: 1.1 }}
             >
               <img
                 src={product.img}
@@ -168,14 +177,27 @@ const App = () => {
                     : ""
                 }`}
               />
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Product Details */}
-        <div className="w-full max-w-5xl flex flex-col items-center bg-white shadow-lg p-8 rounded-xl mt-8 space-y-6">
+        <motion.div
+          className="w-full max-w-5xl flex flex-col items-center bg-white shadow-lg p-8 rounded-xl mt-8 space-y-6"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
           {activeTab === "sensaphone" && (
-            <div className="text-center space-y-4">
+            <motion.div
+              key={"sensaphone"}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center space-y-4"
+            >
               <p className="text-lg text-gray-700">
                 Sensaphone systems provide an extra layer of protection 24/7,
                 instantly notifying you of changes in temperature, equipment
@@ -183,30 +205,45 @@ const App = () => {
                 straight to your mobile device – keeping you updated and giving
                 you peace of mind.
               </p>
-              <img
+              <motion.img
                 src="/images/Page 2_Sensaphone/Sensaphone.png"
                 alt="Sensaphone"
                 className="w-full max-w-md mx-auto rounded-lg shadow-md object-contain"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               />
-            </div>
+            </motion.div>
           )}
           {activeTab === "floor_heating" && (
-            <div className="text-center space-y-4">
+            <motion.div
+              key={"floor_heating"}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center space-y-4"
+            >
               <p className="text-lg text-gray-700">
                 From bathrooms to living rooms, from homes to warehouses, enjoy
                 the comfort of a warm floor. RAYCHEM electric floor heating
-                systems keep you warm and provide energy-efficient comfort.
+                systems keep you warm and provide energy efficient comfort.
+                Optimized for every building or house, with reduced installation
+                times, wifi-enabled thermostats, warranty up to 10 years.
               </p>
               <div className="flex flex-col items-center space-y-3">
-                <img
+                <motion.img
                   src="/images/Page 3_Raychem/1.jpg"
                   alt="Raychem1"
                   className="w-full max-w-md mx-auto shadow-md object-contain"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
                 />
-                <img
+                <motion.img
                   src="/images/Page 3_Raychem/2.jpg"
                   alt="Raychem2"
                   className="w-full max-w-md mx-auto shadow-md object-contain"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
                 />
                 <iframe
                   className="w-full max-w-lg h-64 mt-4 rounded-lg shadow-md"
@@ -215,10 +252,17 @@ const App = () => {
                   allowFullScreen
                 ></iframe>
               </div>
-            </div>
+            </motion.div>
           )}
           {activeTab === "water_leak" && (
-            <div className="text-center space-y-6">
+            <motion.div
+              key={"water_leak"}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center space-y-4"
+            >
               <p className="text-lg text-gray-700">
                 Leak detection systems enhance environmental health and safety
                 by ensuring that leaks are discovered before any significant
@@ -277,18 +321,27 @@ const App = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img
+                    <motion.img
                       src="/images/Page 4_Tracetek/TraceTek Water Leak Detection Schematic Diagram.jpg"
                       alt="TraceTek"
                       className="w-full max-w-2xl mx-auto rounded-lg shadow-md object-contain cursor-pointer"
+                      whileHover={{ scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
                     />
                   </a>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
           {activeTab === "picobox" && (
-            <div className="text-center space-y-6">
+            <motion.div
+              key={"picobox"}
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 0.5 }}
+              className="text-center space-y-4"
+            >
               <p className="text-lg text-gray-700">
                 Picobox is a versatile range of devices designed for remote
                 monitoring and control of equipment and facilities. These
@@ -334,71 +387,85 @@ const App = () => {
                   ></iframe>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
       </section>
       {/* ========== Contact Us ========== */}
-      <section id="contact" className="w-full py-24 bg-white px-4">
-        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+      <motion.section
+        id="contactus"
+        className="w-full py-24 bg-white px-4"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
           Contact Us
         </h2>
         <div className="flex flex-col md:flex-row md:justify-between md:items-start space-y-6 md:space-y-0">
-          {/* Contact Information*/}
-          <div className="md:w-1/2 space-y-4 pl-6 md:pl-12  self-center">
-            <p className="text-lg text-gray-600 flex items-center space-x-3">
-              <FaEnvelope className="text-[#133984]" />
-              <a
-                href="mailto:info@CASsystems.com"
-                className="text-[#133984] hover:underline"
+          {/* Contact Information */}
+          <motion.div
+            className="md:w-1/2 space-y-4 pl-6 md:pl-12 self-center"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            {[
+              {
+                icon: <FaEnvelope className="text-[#133984]" />,
+                text: "info@CASsystems.com",
+                link: "mailto:info@CASsystems.com",
+              },
+              {
+                icon: <FaPhone className="text-[#133984]" />,
+                text: "+852 2780 5123",
+                link: "tel:+85227805123",
+              },
+              {
+                icon: <FaFax className="text-[#133984]" />,
+                text: "+852 3011 5123",
+                link: "fax:+85230115123",
+              },
+              {
+                icon: <FaMapMarkerAlt className="text-[#133984]" />,
+                text: "Unit 1213, 12/F, Chevalier Commercial Centre, No. 8 Wang Hoi Road, Kowloon Bay, Hong Kong",
+                link: "https://maps.app.goo.gl/5zJkmU5jZ1z6LqRn9",
+              },
+            ].map((contact, index) => (
+              <motion.p
+                key={index}
+                className="text-lg text-gray-600 flex items-center space-x-3"
+                whileHover={{ scale: 1.05, color: "#133984" }}
+                transition={{ duration: 0.3 }}
               >
-                info@CASsystems.com
-              </a>
-            </p>
+                {contact.icon}
+                <a
+                  href={contact.link}
+                  className="text-[#133984] hover:underline"
+                >
+                  {contact.text}
+                </a>
+              </motion.p>
+            ))}
+          </motion.div>
 
-            <p className="text-lg text-gray-600 flex items-center space-x-3">
-              <FaPhone className="text-[#133984]" />
-              <a
-                href="tel:+85227805123"
-                className="text-[#133984] hover:underline"
-              >
-                +852 2780 5123
-              </a>
-            </p>
-
-            <p className="text-lg text-gray-600 flex items-center space-x-3">
-              <FaFax className="text-[#133984]" />
-              <a
-                href="fax:+85230115123"
-                className="text-[#133984] hover:underline"
-              >
-                +852 3011 5123
-              </a>
-            </p>
-
-            <p className="text-lg text-gray-600 flex items-center space-x-3">
-              <FaMapMarkerAlt className="text-[#133984]" />
-              <a
-                href="https://maps.app.goo.gl/5zJkmU5jZ1z6LqRn9"
-                className="text-[#133984] hover:underline"
-              >
-                Unit 1213, 12/F, Chevalier Commercial Centre, No. 8 Wang Hoi
-                Road, Kowloon Bay, Hong Kong
-              </a>
-            </p>
-          </div>
-
-          {/* Google Map (Right) */}
-          <div className="md:w-1/2 flex justify-center">
+          {/* Google Map with Zoom-in Effect */}
+          <motion.div
+            className="md:w-1/2 flex justify-center"
+            initial={{ scale: 0.8, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.6 }}
+          >
             <iframe
               title="Google Map"
               className="w-full max-w-lg h-64 rounded-lg shadow-lg"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1366.4052390190125!2d114.21133476594478!3d22.321303633187814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f8eb74b90be1%3A0xd40475ed0cd71f0b!2sCAS%20Systems%20Limited!5e0!3m2!1szh-TW!2sca!4v1740758742850!5m2!1szh-TW!2sca"
               allowFullScreen
             ></iframe>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </div>
   );
 };
