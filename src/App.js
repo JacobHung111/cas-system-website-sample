@@ -113,9 +113,9 @@ const App = () => {
           countries.
         </p>
         <p className="text-lg text-gray-600 max-w-2xl leading-relaxed mt-3">
-          <strong>CAS</strong> has highest quality product. <strong>CAS</strong>{" "}
-          provides professional installation and maintenance service, which
-          safeguard your projects all the way.
+          <strong>CAS</strong> has the highest quality product.{" "}
+          <strong>CAS</strong> provides professional installation and
+          maintenance service, which safeguard your projects all the way.
         </p>
         <motion.img
           src="/images/CAS_Coverage.jpg"
